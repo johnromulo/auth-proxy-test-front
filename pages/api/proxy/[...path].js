@@ -10,7 +10,7 @@ const proxy = httpProxy.createProxyServer();
 
 export const config = {
   api: {
-    bodyParser: true,
+    bodyParser: false,
   },
 };
 
@@ -25,6 +25,7 @@ export default (req, res) => {
 
     // Rewrite URL, strip out leading '/api'
     // '/api/proxy/*' becomes '${API_URL}/*'
+    console.log("API_URL", API_URL);
     console.log("req.url", req.url);
     console.log("req.url parse", url.parse(req.url).pathname);
     // console.log("req.body", req.body);
