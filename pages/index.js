@@ -126,7 +126,7 @@ export default function Homepage({ initialLoginStatus }) {
           onClick={async () => {
             try {
               await axios
-                .get("http://auth-proxy-test-backend.herokuapp.com/api/teste")
+                .get("https://auth-proxy-test-backend.herokuapp.com/api/teste")
                 .then((response) => {
                   console.log("test proxy", response.data);
                   response.data;
