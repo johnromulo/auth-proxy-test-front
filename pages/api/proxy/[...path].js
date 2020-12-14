@@ -6,7 +6,9 @@ import url from "url";
 // applications, you might want to get it from 'next/config' instead.
 const API_URL = process.env.API_URL;
 
-const proxy = httpProxy.createProxyServer();
+const proxy = httpProxy.createProxyServer({
+  secure: true,
+});
 
 export const config = {
   api: {

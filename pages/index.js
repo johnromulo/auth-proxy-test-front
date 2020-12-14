@@ -125,6 +125,24 @@ export default function Homepage({ initialLoginStatus }) {
           type="button"
           onClick={async () => {
             try {
+              await axios
+                .get("http://auth-proxy-test-backend.herokuapp.com/api/teste")
+                .then((response) => {
+                  console.log("test proxy", response.data);
+                  response.data;
+                });
+            } catch (error) {
+              console.log("test rest error", error);
+            }
+          }}
+        >
+          REST NO PROXY
+        </button>
+
+        <button
+          type="button"
+          onClick={async () => {
+            try {
               const res = await client.query({
                 query: GET_USER,
                 variables: { id: Number(2) },
