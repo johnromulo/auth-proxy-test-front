@@ -23,5 +23,9 @@
     "next-with-apollo": "^5.1.0",
     "react": "16.13.1",
     "react-dom": "16.13.1"
+  },
+  "engines": {
+    "node": "12.18.3",
+    "yarn": "1.22.4"
   }
 }
