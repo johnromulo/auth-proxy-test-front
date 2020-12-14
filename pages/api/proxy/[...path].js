@@ -28,6 +28,9 @@ export default (req, res) => {
     console.log("API_URL", API_URL);
     console.log("req.url", req.url);
     console.log("req.url parse", url.parse(req.url).pathname);
+    console.log("req.headers.host", req.headers.host);
+    // console.log("req", req);
+
     // console.log("req.body", req.body);
     req.url = req.url.replace(/^\/api\/proxy/, "");
 
@@ -63,6 +66,7 @@ export default (req, res) => {
               });
 
               res.status(200).json({ loggedIn: true });
+              console.log("proxy resolve");
               console.log("======================");
               resolve();
             } catch (err) {
@@ -70,6 +74,7 @@ export default (req, res) => {
             }
           });
         } else {
+          console.log("proxy resolve");
           console.log("======================");
           resolve();
         }
