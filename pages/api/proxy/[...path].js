@@ -8,11 +8,6 @@ const API_URL = process.env.API_URL;
 
 const proxy = httpProxy.createProxyServer({
   secure: true,
-  target: "",
-  ssl: {
-    key: fs.readFileSync("valid-ssl-key.pem", "utf8"),
-    cert: fs.readFileSync("valid-ssl-cert.pem", "utf8"),
-  },
 });
 
 export const config = {
