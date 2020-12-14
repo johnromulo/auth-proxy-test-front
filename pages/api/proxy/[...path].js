@@ -27,7 +27,7 @@ export default (req, res) => {
     // '/api/proxy/*' becomes '${API_URL}/*'
     console.log("req.url", req.url);
     console.log("req.url parse", url.parse(req.url).pathname);
-    console.log("req.body", req.body);
+    // console.log("req.body", req.body);
     req.url = req.url.replace(/^\/api\/proxy/, "");
 
     // Don't forward cookies to API
