@@ -53,7 +53,6 @@ export default (req, res) => {
         console.log("proxy once req.url", req.url);
         console.log("proxy once req.url parse", url.parse(req.url).pathname);
         console.log("proxy once req.headers.host", req.headers.host);
-        console.log("proxy once res.headers.host", res);
 
         if (isLogin) {
           let responseBody = "";
