@@ -36,6 +36,9 @@ export default (req, res) => {
     // console.log("req.body", req.body);
     req.url = req.url.replace(/^\/api\/proxy/, "");
 
+    console.log("pos req.url", req.url);
+    console.log("pos req.url parse", url.parse(req.url).pathname);
+
     // Don't forward cookies to API
     req.headers.cookie = "";
 
@@ -47,6 +50,10 @@ export default (req, res) => {
     proxy
       .once("proxyRes", (proxyRes, req, res) => {
         console.log("proxy once");
+        console.log("proxy once req.url", req.url);
+        console.log("proxy once req.url parse", url.parse(req.url).pathname);
+        console.log("proxy once req.headers.host", req.headers.host);
+        console.log("proxy once res.headers.host", res);
 
         if (isLogin) {
           let responseBody = "";
@@ -81,7 +88,16 @@ export default (req, res) => {
           resolve();
         }
       })
-      .once("error", reject)
+      .once("error", (error) => {
+        console.log("error proxy", error);
+        reject();
+      })
+      .once("proxyReq", (proxyReq, preq, pres) => {
+        // console.log("proxy proxyRes", proxyReq);
+        // console.log("proxy once req.url", preq.url);
+        // console.log("proxy once req.url parse", url.parse(preq.url).pathname);
+        // console.log("proxy once req.headers.host", preq.headers.host);
+      })
       .web(req, res, {
         target: API_URL,
         autoRewrite: false,
