@@ -16,6 +16,8 @@ export const config = {
   },
 };
 
+console.log("API_URL AQUI", API_URL);
+
 export default (req, res) => {
   console.log("proxy");
   return new Promise((resolve, reject) => {
@@ -54,14 +56,14 @@ export default (req, res) => {
         console.log("proxy once req.url parse", url.parse(req.url).pathname);
         console.log("proxy once req.headers.host", req.headers.host);
 
+        let responseBody = "";
+        proxyRes.on("data", (chunk) => {
+          console.log("proxy data", chunk);
+
+          responseBody += chunk;
+        });
+
         if (isLogin) {
-          let responseBody = "";
-          proxyRes.on("data", (chunk) => {
-            console.log("proxy data", chunk);
-
-            responseBody += chunk;
-          });
-
           proxyRes.on("end", () => {
             try {
               console.log("proxy end", responseBody);
@@ -82,7 +84,9 @@ export default (req, res) => {
             }
           });
         } else {
-          console.log("proxy resolve");
+          const response = JSON.parse(responseBody);
+
+          console.log("proxy resolve", response);
           console.log("======================");
           resolve();
         }
