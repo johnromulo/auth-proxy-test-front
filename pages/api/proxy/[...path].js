@@ -56,14 +56,14 @@ export default (req, res) => {
         console.log("proxy once req.url parse", url.parse(req.url).pathname);
         console.log("proxy once req.headers.host", req.headers.host);
 
+        let responseBody = "";
+        proxyRes.on("data", (chunk) => {
+          console.log("proxy data", chunk);
+
+          responseBody += chunk;
+        });
+
         if (isLogin) {
-          let responseBody = "";
-          proxyRes.on("data", (chunk) => {
-            console.log("proxy data", chunk);
-
-            responseBody += chunk;
-          });
-
           proxyRes.on("end", () => {
             try {
               console.log("proxy end", responseBody);
@@ -84,11 +84,23 @@ export default (req, res) => {
             }
           });
         } else {
-          console.log("proxy resolve");
-          console.log("======================");
-          resolve();
+          proxyRes.on("end", () => {
+            try {
+              console.log("responseBody", responseBody);
+              console.log("proxy resolve");
+              console.log("======================");
+              resolve();
+            } catch (err) {
+              console.log("err", err);
+              reject(err);
+            }
+          });
+          // resolve();
         }
       })
+      // .once("proxyReq", (proxyReq, req, res, options) => {
+      //   console.log("proxyReq", proxyReq);
+      // })
       .once("error", (error) => {
         console.log("error proxy", error);
         reject();
