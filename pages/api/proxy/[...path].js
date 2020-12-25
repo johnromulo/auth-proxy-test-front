@@ -5,8 +5,17 @@ import url from "url";
 // Get the actual API_URL as an environment variable. For real
 // applications, you might want to get it from 'next/config' instead.
 const API_URL = process.env.API_URL;
+const SERVER_KEY = process.env.SERVER_KEY;
+const SERVER_CSR = process.env.SERVER_CSR;
 
-const proxy = httpProxy.createProxyServer({});
+const proxy = httpProxy.createProxyServer({
+  ssl: {
+    key: SERVER_KEY,
+    cert: SERVER_CSR,
+  },
+  target: "https://auth-proxy-test-front.herokuapp.com/",
+  secure: true,
+});
 
 export const config = {
   api: {
